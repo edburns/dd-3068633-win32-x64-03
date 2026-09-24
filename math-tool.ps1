@@ -12,7 +12,7 @@ function Get-Fibonacci {
     Returns the Fibonacci number for a non-negative integer.
 
     .PARAMETER N
-    The non-negative integer position to evaluate.
+    The non-negative Int32 position to evaluate.
 
     .OUTPUTS
     System.Numerics.BigInteger

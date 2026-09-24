@@ -29,7 +29,7 @@ Describe 'math-tool.ps1 CLI' {
         @{ N = 6; Expected = 'Fibonacci(6) = 8' }
     ) {
         $startInfo = [System.Diagnostics.ProcessStartInfo]::new()
-        $startInfo.FileName = (Get-Command pwsh).Source
+        $startInfo.FileName = (Get-Process -Id $PID).Path
         $startInfo.ArgumentList.Add('-NoLogo')
         $startInfo.ArgumentList.Add('-NoProfile')
         $startInfo.ArgumentList.Add('-File')
