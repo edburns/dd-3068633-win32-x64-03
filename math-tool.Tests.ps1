@@ -28,8 +28,16 @@ Describe 'math-tool.ps1 CLI' {
         @{ N = 1; Expected = 'Fibonacci(1) = 1' }
         @{ N = 6; Expected = 'Fibonacci(6) = 8' }
     ) {
+        $pwshCommand = Get-Command pwsh -CommandType Application -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+
         $startInfo = [System.Diagnostics.ProcessStartInfo]::new()
-        $startInfo.FileName = (Get-Process -Id $PID).Path
+        $startInfo.FileName = if ($pwshCommand) {
+            $pwshCommand.Source
+        }
+        else {
+            (Get-Process -Id $PID).Path
+        }
         $startInfo.ArgumentList.Add('-NoLogo')
         $startInfo.ArgumentList.Add('-NoProfile')
         $startInfo.ArgumentList.Add('-File')
