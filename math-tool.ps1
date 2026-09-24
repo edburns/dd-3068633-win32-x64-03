@@ -81,6 +81,7 @@ if (-not $isDotSourced) {
             Write-Output "Factorial($N) = $value"
         }
         default {
+            # Defensive guard if parameter validation changes without updating dispatch.
             throw "Unsupported operation '$Operation'."
         }
     }
