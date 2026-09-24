@@ -1,6 +1,5 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('fibonacci', 'factorial')]
     [string] $Operation = 'fibonacci',
 
     [ValidateRange(0, [int]::MaxValue)]
@@ -79,6 +78,9 @@ if (-not $isDotSourced) {
         'factorial' {
             $value = Get-Factorial -N $N
             Write-Output "Factorial($N) = $value"
+        }
+        default {
+            throw "Unsupported operation '$Operation'."
         }
     }
 }
