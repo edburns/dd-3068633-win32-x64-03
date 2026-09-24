@@ -44,7 +44,12 @@ Describe 'math-tool.ps1 CLI' {
         try {
             $stdoutTask = $process.StandardOutput.ReadToEndAsync()
             $stderrTask = $process.StandardError.ReadToEndAsync()
-            $process.WaitForExit()
+            $exited = $process.WaitForExit(10000)
+            if (-not $exited) {
+                $process.Kill($true)
+                throw 'Timed out waiting for math-tool.ps1 CLI process to exit.'
+            }
+
             $exitCode = $process.ExitCode
             $stdout = $stdoutTask.GetAwaiter().GetResult()
             $stderr = $stderrTask.GetAwaiter().GetResult()

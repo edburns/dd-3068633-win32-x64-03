@@ -7,6 +7,16 @@ param(
 Set-StrictMode -Version Latest
 
 function Get-Fibonacci {
+    <#
+    .SYNOPSIS
+    Returns the Fibonacci number for a non-negative integer.
+
+    .PARAMETER N
+    The non-negative integer position to evaluate.
+
+    .OUTPUTS
+    System.Numerics.BigInteger
+    #>
     [CmdletBinding()]
     param(
         [ValidateRange(0, [int]::MaxValue)]
@@ -32,6 +42,7 @@ function Get-Fibonacci {
 $invokedScriptPath = [System.IO.Path]::GetFullPath($MyInvocation.MyCommand.Path)
 $currentScriptPath = [System.IO.Path]::GetFullPath($PSCommandPath)
 
+# Suppress CLI output when tests dot-source this script to load functions.
 if ($invokedScriptPath -eq $currentScriptPath -and $MyInvocation.InvocationName -ne '.') {
     $value = Get-Fibonacci -N $N
     Write-Output "Fibonacci($N) = $value"
