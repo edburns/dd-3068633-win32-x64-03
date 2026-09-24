@@ -39,8 +39,10 @@ function Get-Fibonacci {
     return $current
 }
 
+$isDotSourced = $MyInvocation.InvocationName -eq '.' -or $MyInvocation.Line -match '^\s*\.\s'
+
 # Suppress CLI output when tests dot-source this script to load functions.
-if ($MyInvocation.InvocationName -ne '.') {
+if (-not $isDotSourced) {
     $value = Get-Fibonacci -N $N
     Write-Output "Fibonacci($N) = $value"
 }
