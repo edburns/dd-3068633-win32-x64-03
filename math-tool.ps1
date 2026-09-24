@@ -29,7 +29,10 @@ function Get-Fibonacci {
     return $current
 }
 
-if ($MyInvocation.InvocationName -ne '.') {
+$invokedScriptPath = [System.IO.Path]::GetFullPath($MyInvocation.MyCommand.Path)
+$currentScriptPath = [System.IO.Path]::GetFullPath($PSCommandPath)
+
+if ($invokedScriptPath -eq $currentScriptPath -and $MyInvocation.InvocationName -ne '.') {
     $value = Get-Fibonacci -N $N
     Write-Output "Fibonacci($N) = $value"
 }

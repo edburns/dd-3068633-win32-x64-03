@@ -41,12 +41,20 @@ Describe 'math-tool.ps1 CLI' {
         $startInfo.UseShellExecute = $false
 
         $process = [System.Diagnostics.Process]::Start($startInfo)
-        $stdout = $process.StandardOutput.ReadToEnd()
-        $stderr = $process.StandardError.ReadToEnd()
-        $process.WaitForExit()
+        try {
+            $stdoutTask = $process.StandardOutput.ReadToEndAsync()
+            $stderrTask = $process.StandardError.ReadToEndAsync()
+            $process.WaitForExit()
+            $exitCode = $process.ExitCode
+            $stdout = $stdoutTask.GetAwaiter().GetResult()
+            $stderr = $stderrTask.GetAwaiter().GetResult()
+        }
+        finally {
+            $process.Dispose()
+        }
 
-        $process.ExitCode | Should -Be 0
+        $exitCode | Should -Be 0
         $stderr | Should -Be ''
-        $stdout | Should -Be "$Expected$([Environment]::NewLine)"
+        $stdout | Should -Match "^$([regex]::Escape($Expected))`r?`n$"
     }
 }
