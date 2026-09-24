@@ -12,6 +12,7 @@ BeforeAll {
     if (-not $script:PowerShellPath) {
         throw 'PowerShell 7 executable pwsh is required for isolated CLI tests.'
     }
+    $script:CliTimeoutMs = 10000
 
     function Invoke-MathToolCli {
         param(
@@ -34,7 +35,7 @@ BeforeAll {
         try {
             $stdoutTask = $process.StandardOutput.ReadToEndAsync()
             $stderrTask = $process.StandardError.ReadToEndAsync()
-            $exited = $process.WaitForExit(10000)
+            $exited = $process.WaitForExit($script:CliTimeoutMs)
             if (-not $exited) {
                 $process.Kill($true)
                 throw 'Timed out waiting for math-tool.ps1 CLI process to exit.'
