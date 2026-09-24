@@ -60,6 +60,6 @@ Describe 'math-tool.ps1 CLI' {
 
         $exitCode | Should -Be 0
         $stderr | Should -Be ''
-        $stdout | Should -Match "^$([regex]::Escape($Expected))`r?`n$"
+        $stdout | Should -Match ('^{0}\r?\n$' -f [regex]::Escape($Expected))
     }
 }

@@ -39,11 +39,8 @@ function Get-Fibonacci {
     return $current
 }
 
-$invokedScriptPath = [System.IO.Path]::GetFullPath($MyInvocation.MyCommand.Path)
-$currentScriptPath = [System.IO.Path]::GetFullPath($PSCommandPath)
-
 # Suppress CLI output when tests dot-source this script to load functions.
-if ($invokedScriptPath -eq $currentScriptPath -and $MyInvocation.InvocationName -ne '.') {
+if ($MyInvocation.InvocationName -ne '.') {
     $value = Get-Fibonacci -N $N
     Write-Output "Fibonacci($N) = $value"
 }
