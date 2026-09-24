@@ -80,9 +80,5 @@ if (-not $isDotSourced) {
             $value = Get-Factorial -N $N
             Write-Output "Factorial($N) = $value"
         }
-        default {
-            # Keep this switch in sync with the Operation ValidateSet above.
-            throw "Unsupported operation '$Operation'."
-        }
     }
 }
