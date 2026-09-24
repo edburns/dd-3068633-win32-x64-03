@@ -50,6 +50,7 @@ Describe 'math-tool.ps1 CLI' {
                 throw 'Timed out waiting for math-tool.ps1 CLI process to exit.'
             }
 
+            $process.WaitForExit()
             $exitCode = $process.ExitCode
             $stdout = $stdoutTask.GetAwaiter().GetResult()
             $stderr = $stderrTask.GetAwaiter().GetResult()
